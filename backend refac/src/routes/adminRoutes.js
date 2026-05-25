@@ -2,11 +2,6 @@ const express = require('express');
 const router = express.Router();
 const productosController = require('../controllers/productosController');
 
-console.log("--- DEBUG DE CONTROLADOR ---");
-console.log("Tipo de productosController:", typeof productosController);
-console.log("Es 'crear' una función?:", typeof productosController.crear);
-console.log("--- FIN DEBUG ---");
-
 // Importaciones de seguridad
 const authMiddleware = require('../middlewares/authMiddleware');
 const adminMiddleware = require('../middlewares/adminMiddleware');
