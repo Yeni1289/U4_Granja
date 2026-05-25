@@ -1,27 +1,19 @@
-const sql = require('mssql');
+const { Pool } = require('pg');
 require('dotenv').config();
 
-const dbConfig = {
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    server: process.env.DB_SERVER,
-    database: process.env.DB_NAME,
-    options: {
-        instanceName: 'SERVER3',
-        encrypt: false,
-        trustServerCertificate: true
-    }
-};
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+});
 
-const poolPromise = new sql.ConnectionPool(dbConfig)
-    .connect()
-    .then(pool => {
-        console.log('✅ Conectado a SQL Server (SERVER3) con éxito');
-        return pool;
+pool.connect()
+    .then(client => {
+        console.log('✅ Conectado a PostgreSQL (Neon) con éxito');
+        client.release();
     })
     .catch(err => {
         console.error('❌ Fallo crítico en la conexión a la base de datos:', err.message);
         process.exit(1);
     });
 
-module.exports = { sql, poolPromise };
+module.exports = { pool };
