@@ -7,8 +7,8 @@
     "dev": "nodemon server.js",
     "start": "node server.js",
     "seed:admin": "node generarAdmin.js",
-    "cf:login": "wrangler login",
-    "cf:deploy": "wrangler deploy"
+    "cf:login": "npx --yes wrangler login",
+    "cf:deploy": "npx --yes wrangler deploy --config wrangler.toml"
   },
   "keywords": [],
   "author": "",
